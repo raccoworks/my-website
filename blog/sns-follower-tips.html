@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instagramのフォロワーを自然に増やす5つの方法 | 田原晃成</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:   #1a56db;
+      --primary-d: #1441b0;
+      --accent:    #e6ac17;
+      --dark:      #1e2433;
+      --gray:      #6b7280;
+      --light:     #f4f7fb;
+      --white:     #ffffff;
+      --radius:    12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Segoe UI', Arial, sans-serif;
+      color: #333;
+      background: var(--white);
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== Header ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e5e7eb;
+      padding: 14px 0;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .logo span { display: block; font-size: 11px; font-weight: 500; color: var(--gray); letter-spacing: 0.05em; }
+
+    nav { display: flex; align-items: center; gap: 28px; }
+    nav a { font-size: 13px; font-weight: 600; color: #444; transition: color .2s; }
+    nav a:hover { color: var(--primary); }
+
+    .btn-nav {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px !important;
+    }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; }
+
+    /* ===== Article Layout ===== */
+    .article-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 48px;
+      padding: 56px 0 80px;
+      align-items: start;
+    }
+
+    /* ===== Article ===== */
+    .article-header { margin-bottom: 36px; }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .post-tag {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(26,86,219,.08);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .post-date { font-size: 13px; color: var(--gray); }
+
+    .article-title {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+    }
+
+    .article-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: var(--light);
+      border-radius: 12px;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .author-name { font-size: 14px; font-weight: 700; color: var(--dark); }
+    .author-role { font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+    .article-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #eef3ff, #dbeafe);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 72px;
+      margin-bottom: 40px;
+    }
+
+    /* ===== Article Body ===== */
+    .article-body { font-size: 16px; line-height: 1.9; color: #374151; }
+
+    .article-body h2 {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--dark);
+      margin: 48px 0 16px;
+      padding-left: 16px;
+      border-left: 4px solid var(--primary);
+      line-height: 1.4;
+    }
+
+    .article-body h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dark);
+      margin: 32px 0 12px;
+    }
+
+    .article-body p { margin-bottom: 18px; }
+
+    .article-body ul, .article-body ol {
+      margin: 16px 0 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .article-body li { line-height: 1.7; }
+
+    .article-body strong { font-weight: 700; color: var(--dark); }
+
+    .article-body .highlight {
+      background: rgba(26,86,219,.06);
+      border-left: 3px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 15px;
+    }
+
+    .tip-box {
+      background: var(--light);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+
+    .tip-box .tip-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .tip-box p { margin: 0; font-size: 15px; }
+
+    /* 番号付きポイント */
+    .point {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      margin: 32px 0;
+      padding: 24px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 16px;
+      transition: border-color .2s;
+    }
+
+    .point:hover { border-color: var(--primary); }
+
+    .point-num {
+      min-width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .point h3 { font-size: 17px; font-weight: 800; color: var(--dark); margin: 0 0 8px; }
+    .point p  { font-size: 14px; color: var(--gray); margin: 0; line-height: 1.7; }
+
+    /* ===== Article Footer ===== */
+    .article-footer {
+      margin-top: 56px;
+      padding-top: 32px;
+      border-top: 1.5px solid #e5e7eb;
+    }
+
+    .article-footer .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .article-footer .back-link::before { content: '←'; }
+
+    .author-card {
+      margin-top: 32px;
+      padding: 28px;
+      background: var(--light);
+      border-radius: 16px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .author-card img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .author-card h3 { font-size: 16px; font-weight: 800; color: var(--dark); }
+    .author-card p  { font-size: 14px; color: var(--gray); margin-top: 6px; line-height: 1.7; }
+
+    .cta-card {
+      margin-top: 28px;
+      background: linear-gradient(135deg, var(--primary), #3b5fe2);
+      border-radius: 16px;
+      padding: 28px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta-card h3 { font-size: 18px; font-weight: 800; }
+    .cta-card p  { font-size: 14px; opacity: .85; margin-top: 8px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform .2s, box-shadow .2s;
+      margin-top: 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.2); }
+    .btn-accent { background: var(--accent); color: #fff; }
+    .btn-white  { background: #fff; color: var(--primary); }
+
+    /* ===== Sidebar ===== */
+    .sidebar { position: sticky; top: 80px; }
+
+    .sidebar-card {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .sidebar-card h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid #e5e7eb;
+    }
+
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .toc-list a {
+      font-size: 13px;
+      color: var(--gray);
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      transition: color .2s;
+    }
+
+    .toc-list a:hover { color: var(--primary); }
+    .toc-list a::before { content: '#'; color: var(--primary); font-weight: 700; flex-shrink: 0; }
+
+    .sidebar-cta {
+      background: linear-gradient(135deg, var(--primary), #3b5fe2);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .sidebar-cta h3 { font-size: 16px; font-weight: 800; }
+    .sidebar-cta p  { font-size: 13px; opacity: .85; margin-top: 8px; line-height: 1.6; }
+    .sidebar-cta .btn { width: 100%; justify-content: center; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: var(--dark);
+      color: #94a3b8;
+      padding: 40px 0 28px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo { font-size: 18px; font-weight: 800; color: #fff; }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; transition: color .2s; }
+    .footer-links a:hover { color: #fff; }
+
+    .footer-bottom {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .article-wrapper { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      nav { display: none; }
+      nav.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-top: 1px solid #e5e7eb; padding: 16px 24px 24px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+      .hamburger { display: flex; }
+      header { position: relative; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="../index.html" class="logo">
+        田原晃成 SNS運用代行
+        <span>Kosei Tahara — Social Media Management</span>
+      </a>
+      <nav id="main-nav">
+        <a href="../index.html#services">サービス</a>
+        <a href="../index.html#pricing">料金</a>
+        <a href="../blog.html">ブログ</a>
+        <a href="../index.html#contact" class="btn-nav">無料相談する</a>
+      </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="article-wrapper">
+
+    <!-- ===== 本文 ===== -->
+    <main>
+      <div class="article-header">
+        <div class="article-meta">
+          <span class="post-tag">Instagram</span>
+          <span class="post-date">2025年4月1日</span>
+        </div>
+        <h1 class="article-title">Instagramのフォロワーを自然に増やす5つの方法</h1>
+        <div class="article-author">
+          <img
+            class="author-avatar"
+            src="https://ugc.production.linktr.ee/eec54ba5-1b4d-4a7b-ad52-9d9562ef029a_------.jpeg"
+            alt="田原晃成"
+          >
+          <div>
+            <div class="author-name">田原晃成</div>
+            <div class="author-role">SNS運用代行 / NPOぶうめらん代表</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="article-thumb">📱</div>
+
+      <div class="article-body">
+
+        <p>
+          「毎日投稿しているのに、フォロワーがなかなか増えない」——そんな悩みを抱える方はとても多いです。
+          実は、フォロワーが伸びない原因のほとんどは<strong>投稿の頻度ではなく、戦略の有無</strong>にあります。
+        </p>
+
+        <p>
+          この記事では、広告費をかけずに、Instagramのフォロワーを自然に増やすための方法を5つ紹介します。
+          地域の中小企業や個人事業主の方でも、今日から実践できる内容です。
+        </p>
+
+        <div class="highlight">
+          Instagramで成果を出している人は「毎日投稿している人」ではなく、「誰に何を届けるかが明確な人」です。
+        </div>
+
+        <h2 id="point1">① プロフィールを徹底的に最適化する</h2>
+
+        <div class="point">
+          <div class="point-num">1</div>
+          <div>
+            <h3>プロフィール欄は「一瞬で伝わる」設計に</h3>
+            <p>新しいフォロワーの獲得は、まずプロフィールへの訪問から始まります。あなたのアカウントに初めて訪れた人が「この人をフォローしたい」と思うかどうかは、プロフィール欄の出来で決まります。名前・肩書き・何ができる人か・どんな人に向けて発信しているか——これらを140文字以内でシンプルに伝えましょう。</p>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-label">実践ポイント</div>
+          <p>プロフィール文の最初の1〜2行に「誰のための・何のアカウントか」を明記する。例：「岐阜県でSNS運用を代行 ｜ 中小企業のInstagram集客をサポート ｜ 無料相談受付中」</p>
+        </div>
+
+        <h2 id="point2">② ターゲットを1人に絞って発信する</h2>
+
+        <div class="point">
+          <div class="point-num">2</div>
+          <div>
+            <h3>「みんなに届けたい」は「誰にも届かない」</h3>
+            <p>フォロワーが増えないアカウントに共通するのが「誰に向けて発信しているかが曖昧」なことです。ターゲットを絞ると届く人が減ると思いがちですが、逆です。ターゲットが明確なほど、その人に深く刺さり、保存・シェアが生まれ、アルゴリズムにも評価されます。「30代女性・子育て中・岐阜県在住」のように、できるだけ具体的なペルソナを設定しましょう。</p>
+          </div>
+        </div>
+
+        <h2 id="point3">③ 保存される投稿を意識してつくる</h2>
+
+        <div class="point">
+          <div class="point-num">3</div>
+          <div>
+            <h3>「いいね」より「保存」を狙う</h3>
+            <p>Instagramのアルゴリズムは、保存数・シェア数を特に重視します。「あとでまた見たい」「誰かに教えたい」と思われる投稿を意識してつくることが、リーチを広げる近道です。具体的には、役立つ情報をまとめた「まとめ系投稿」「チェックリスト投稿」「比較投稿」などが保存されやすい傾向にあります。</p>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-label">実践ポイント</div>
+          <p>投稿の最後に「この投稿を保存しておくと便利です」など保存を促すひと言を添えると、保存率が上がります。</p>
+        </div>
+
+        <h2 id="point4">④ ハッシュタグを戦略的に使う</h2>
+
+        <div class="point">
+          <div class="point-num">4</div>
+          <div>
+            <h3>ハッシュタグは「量」より「精度」</h3>
+            <p>以前は30個のハッシュタグを並べる手法が主流でしたが、現在のInstagramでは3〜10個の関連性の高いハッシュタグを使うほうが効果的とされています。投稿内容・ターゲット・地域性を反映したハッシュタグを選びましょう。また、フォロワー数が少ないうちは、投稿数が少ないニッチなハッシュタグ（1万〜10万件程度）を狙うと上位表示されやすくなります。</p>
+          </div>
+        </div>
+
+        <h2 id="point5">⑤ コメントへの返信とコミュニティ形成</h2>
+
+        <div class="point">
+          <div class="point-num">5</div>
+          <div>
+            <h3>フォロワーとの「つながり」を大切に</h3>
+            <p>Instagramはソーシャルメディア——つまり、人と人のつながりが基本です。コメントへの丁寧な返信、フォロワーの投稿への積極的なリアクション、ストーリーズのQ&A機能の活用など、双方向のコミュニケーションを意識することでエンゲージメントが高まり、アルゴリズムにも好意的に評価されます。</p>
+          </div>
+        </div>
+
+        <h2 id="summary">まとめ</h2>
+
+        <p>フォロワーを増やすために大切なことをまとめると、以下の5つです。</p>
+
+        <ul>
+          <li><strong>プロフィールを「一瞬で伝わる」設計にする</strong></li>
+          <li><strong>ターゲットを1人に絞って発信する</strong></li>
+          <li><strong>保存・シェアされる投稿を意識してつくる</strong></li>
+          <li><strong>ハッシュタグは量より精度で選ぶ</strong></li>
+          <li><strong>フォロワーとのコミュニケーションを大切にする</strong></li>
+        </ul>
+
+        <p>どれか1つだけ実践しても効果は限定的です。5つを組み合わせて継続することで、じわじわとフォロワーが増えていきます。もし「自分でやってみたけどなかなか伸びない」という場合は、ぜひ一度ご相談ください。</p>
+
+      </div>
+
+      <div class="article-footer">
+        <a href="../blog.html" class="back-link">ブログ一覧に戻る</a>
+
+        <div class="author-card">
+          <img
+            src="https://ugc.production.linktr.ee/eec54ba5-1b4d-4a7b-ad52-9d9562ef029a_------.jpeg"
+            alt="田原晃成"
+          >
+          <div>
+            <h3>田原晃成（たはら こうせい）</h3>
+            <p>岐阜県関市を拠点に活動するSNS運用代行。NPO「ぶうめらん」代表として地域のSNS発信を実践しながら、中小企業・個人事業主のSNS運用をサポートしています。</p>
+          </div>
+        </div>
+
+        <div class="cta-card">
+          <h3>SNS運用、一人で抱えなくて大丈夫です</h3>
+          <p>戦略から投稿まで、まるっとお任せください。<br>まずは無料相談からどうぞ。</p>
+          <a href="../index.html#contact" class="btn btn-accent">無料相談を予約する →</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h3>目次</h3>
+        <ul class="toc-list">
+          <li><a href="#point1">① プロフィールを最適化する</a></li>
+          <li><a href="#point2">② ターゲットを1人に絞る</a></li>
+          <li><a href="#point3">③ 保存される投稿をつくる</a></li>
+          <li><a href="#point4">④ ハッシュタグを戦略的に使う</a></li>
+          <li><a href="#point5">⑤ コミュニティを形成する</a></li>
+          <li><a href="#summary">まとめ</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-cta">
+        <h3>SNS運用のご相談</h3>
+        <p>30分の無料相談で、あなたのSNSの課題を整理します。</p>
+        <a href="../index.html#contact" class="btn btn-white">無料相談する →</a>
+      </div>
+    </aside>
+
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">田原晃成 SNS運用代行</div>
+      <div class="footer-links">
+        <a href="../index.html">ホーム</a>
+        <a href="../blog.html">ブログ</a>
+        <a href="../index.html#contact">お問い合わせ</a>
+        <a href="https://instagram.com/racco0121" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://line.me/ti/p/EDrMoMagxF" target="_blank" rel="noopener noreferrer">LINE</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 田原晃成 SNS運用代行. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('main-nav').classList.toggle('open');
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブログ | 田原晃成 SNS運用代行</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:   #1a56db;
+      --primary-d: #1441b0;
+      --accent:    #e6ac17;
+      --dark:      #1e2433;
+      --gray:      #6b7280;
+      --light:     #f4f7fb;
+      --white:     #ffffff;
+      --radius:    12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Segoe UI', Arial, sans-serif;
+      color: #333;
+      background: var(--white);
+      line-height: 1.7;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== Header ===== */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e5e7eb;
+      padding: 14px 0;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .logo span { display: block; font-size: 11px; font-weight: 500; color: var(--gray); letter-spacing: 0.05em; }
+
+    nav { display: flex; align-items: center; gap: 28px; }
+    nav a { font-size: 13px; font-weight: 600; color: #444; transition: color .2s; }
+    nav a:hover { color: var(--primary); }
+    nav a.active { color: var(--primary); }
+
+    .btn-nav {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px !important;
+    }
+
+    .btn-nav:hover { background: var(--primary-d) !important; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #333; border-radius: 2px; }
+
+    /* ===== Hero ===== */
+    .page-hero {
+      background: linear-gradient(160deg, #eef3ff 0%, #f9fafe 60%, #fff 100%);
+      padding: 64px 0 56px;
+      text-align: center;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(26,86,219,.08);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 900;
+      color: var(--dark);
+      letter-spacing: -1px;
+    }
+
+    .page-hero p {
+      margin-top: 12px;
+      font-size: 16px;
+      color: var(--gray);
+    }
+
+    /* ===== Blog List ===== */
+    .blog-section { padding: 64px 0 80px; }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .post-card {
+      border: 1.5px solid #e5e7eb;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(26,86,219,.1);
+      border-color: var(--primary);
+    }
+
+    .post-thumb {
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #eef3ff, #dbeafe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    .post-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .post-tag {
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(26,86,219,.08);
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .post-date {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    .post-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .post-excerpt {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .post-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .post-link::after { content: '→'; }
+
+    /* ===== Empty state ===== */
+    .coming-card {
+      border: 1.5px dashed #d1d5db;
+      border-radius: 16px;
+      padding: 40px 24px;
+      text-align: center;
+      color: var(--gray);
+    }
+
+    .coming-card p { font-size: 14px; margin-top: 8px; }
+
+    /* ===== CTA ===== */
+    .blog-cta {
+      margin-top: 64px;
+      background: linear-gradient(135deg, var(--primary), #3b5fe2);
+      border-radius: 20px;
+      padding: 48px 40px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .blog-cta h2 { font-size: 24px; font-weight: 800; }
+    .blog-cta p  { margin-top: 10px; font-size: 15px; opacity: .85; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: transform .2s, box-shadow .2s;
+      margin-top: 24px;
+    }
+
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+    .btn-accent { background: var(--accent); color: #fff; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: var(--dark);
+      color: #94a3b8;
+      padding: 40px 0 28px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo { font-size: 18px; font-weight: 800; color: #fff; }
+
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { font-size: 13px; transition: color .2s; }
+    .footer-links a:hover { color: #fff; }
+
+    .footer-bottom {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      text-align: center;
+      font-size: 12px;
+    }
+
+    /* ===== Animations ===== */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+    .fade-in.visible { opacity: 1; transform: none; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+      nav { display: none; }
+      nav.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-top: 1px solid #e5e7eb; padding: 16px 24px 24px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+      .hamburger { display: flex; }
+      header { position: relative; }
+    }
+
+    @media (max-width: 600px) {
+      .blog-grid { grid-template-columns: 1fr; }
+      .blog-cta { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        田原晃成 SNS運用代行
+        <span>Kosei Tahara — Social Media Management</span>
+      </a>
+      <nav id="main-nav">
+        <a href="index.html#services">サービス</a>
+        <a href="index.html#pricing">料金</a>
+        <a href="blog.html" class="active">ブログ</a>
+        <a href="index.html#contact" class="btn-nav">無料相談する</a>
+      </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="section-label">Blog</div>
+    <h1>SNS運用のヒント＆ノウハウ</h1>
+    <p>フォロワーが増える投稿術・分析方法・運用の考え方を発信中</p>
+  </div>
+</div>
+
+<section class="blog-section">
+  <div class="container">
+    <div class="blog-grid">
+
+      <!-- 記事1（サンプル） -->
+      <a href="blog/sns-follower-tips.html" class="post-card fade-in">
+        <div class="post-thumb">📱</div>
+        <div class="post-body">
+          <div class="post-meta">
+            <span class="post-tag">Instagram</span>
+            <span class="post-date">2025年4月1日</span>
+          </div>
+          <h2 class="post-title">Instagramのフォロワーを自然に増やす5つの方法</h2>
+          <p class="post-excerpt">「投稿しているのにフォロワーが増えない」という悩みは多くの方が抱えています。この記事では、広告費ゼロでフォロワーを着実に伸ばすための実践的な方法を5つ紹介します。</p>
+          <span class="post-link">続きを読む</span>
+        </div>
+      </a>
+
+      <!-- Coming soon -->
+      <div class="coming-card fade-in">
+        <div style="font-size:32px;">✍️</div>
+        <p>次の記事を執筆中です。<br>お楽しみに！</p>
+      </div>
+
+      <div class="coming-card fade-in">
+        <div style="font-size:32px;">✍️</div>
+        <p>次の記事を執筆中です。<br>お楽しみに！</p>
+      </div>
+
+    </div>
+
+    <div class="blog-cta fade-in">
+      <h2>SNS運用、一緒にやってみませんか？</h2>
+      <p>まずは無料相談から。30分でお悩みを整理します。</p>
+      <a href="index.html#contact" class="btn btn-accent">無料相談を予約する →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">田原晃成 SNS運用代行</div>
+      <div class="footer-links">
+        <a href="index.html">ホーム</a>
+        <a href="blog.html">ブログ</a>
+        <a href="index.html#contact">お問い合わせ</a>
+        <a href="https://instagram.com/racco0121" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://line.me/ti/p/EDrMoMagxF" target="_blank" rel="noopener noreferrer">LINE</a>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 田原晃成 SNS運用代行. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('main-nav').classList.toggle('open');
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
